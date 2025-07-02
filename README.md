@@ -1,3 +1,17 @@
+
+# Análisis de datos espaciales de GAIA para la predicción de ubicación de constelaciones y estrellas con Big Data
+Gaia es una misión espacial europea que proporciona astrometría y muchos más datos y métricas de 1.000 millones de estrellas de la Vía Láctea. En este proyecto utilizaremos la mayor cantidad de herramientas aprendidas en Big Data para poder sacar información provechosa de los datos proporcionados por Gaia, con el fin de predecir la ubicación de algunas estrellas en las constelaciones.  
+
+## Ingesta de datos con Kafka  
+Nuestro objetivo es recolectar un gran volúmen de datos progresivamente mediante el consumer.py 
+
+
+
+
+
+
+
+
 ## Procesamiento con Spark
 
 Este módulo se encarga de recibir los datos emitidos desde Kafka y aplicar un pipeline de limpieza, imputación de valores nulos y transformación, utilizando Apache Spark.
