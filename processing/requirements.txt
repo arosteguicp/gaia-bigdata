@@ -1,2 +1,4 @@
 pyspark
 pandas
+pymongo
+pyarrow

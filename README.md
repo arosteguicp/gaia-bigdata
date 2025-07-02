@@ -56,3 +56,43 @@ docker run -it --rm `
   bitnami/spark:3.1.3 `
   spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.3 gaia_streaming_cleaner.py 
 ```
+
+## Carga y Almacenamiento en MongoDB
+
+Una vez que los datos han sido procesados y limpiados por Spark, el sistema permite cargarlos a MongoDB para facilitar consultas complejas, visualizaciones y análisis espaciales.
+
+### Scripts disponibles:
+
+- `processing/store_to_mongo.py`: carga los archivos **Parquet** a `gaia_clean_parquet`.
+- `processing/store_csv_to_mongo.py`: carga los archivos **CSV** a `gaia_clean_csv`.
+
+Ambos scripts crean el índice geoespacial (`2dsphere`) sobre el campo `location`.
+
+
+### Ejecución
+
+Asegurarse de tener MongoDB corriendo localmente o en Docker:
+
+```bash
+docker run -d --name mongo-gaia -p 27017:27017 mongo
+```
+
+## Consultas frecuentes con MongoDB
+
+El archivo `processing/mongo_queries.py` permite realizar búsquedas rápidas y reutilizables sobre los datos astronómicos almacenados.
+
+### Consultas disponibles:
+
+| Consulta                            | Descripción |
+|-------------------------------------|-------------|
+| `estrellas_por_magnitud()`         | Rango de magnitud `phot_g_mean_mag` |
+| `estrellas_temperatura()`          | Rango de temperatura efectiva |
+| `estrellas_por_distancia()`        | Rango de distancia en parsecs |
+| `estrellas_alta_velocidad()`       | Movimiento propio (`pmra`, `pmdec`) elevado |
+| `estrellas_bril_cerca()`           | Estrellas brillantes y próximas |
+
+### Ejecución desde terminal
+
+```bash
+python processing/mongo_queries.py
+```
