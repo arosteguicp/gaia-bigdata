@@ -1,0 +1,2 @@
+v1
+{"path":"file:///app/output/cleaned_stream/parquet/part-00000-8d808ee4-e3bc-4655-814b-1ffdf0902ceb-c000.snappy.parquet","size":123670,"isDir":false,"modificationTime":1751428659808,"blockReplication":1,"blockSize":33554432,"action":"add"}

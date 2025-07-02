@@ -1,0 +1,11 @@
+v1
+{"path":"file:///app/output/cleaned_stream/csv/part-00000-394812f8-8ccf-40c8-a2d1-19ebaf850e5d-c000.csv","size":102,"isDir":false,"modificationTime":1751428536488,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/cleaned_stream/csv/part-00000-2e40668a-c237-4475-a1a2-d57c6843be3e-c000.csv","size":319,"isDir":false,"modificationTime":1751428635683,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/cleaned_stream/csv/part-00000-b652a007-735d-44a0-884b-d507bfdb149b-c000.csv","size":452136,"isDir":false,"modificationTime":1751428640449,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/cleaned_stream/csv/part-00000-37329b9b-1195-45d3-94bf-5d2b99deee47-c000.csv","size":364823,"isDir":false,"modificationTime":1751428643232,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/cleaned_stream/csv/part-00000-461ecd6f-b126-420a-a3a4-a2cc146ae214-c000.csv","size":318624,"isDir":false,"modificationTime":1751428646682,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/cleaned_stream/csv/part-00000-ab8377e0-bb5d-4e9a-9b96-d45638fc2ed9-c000.csv","size":280855,"isDir":false,"modificationTime":1751428649278,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/cleaned_stream/csv/part-00000-b95f14ca-c1d9-42f1-b9e3-971366eab4e5-c000.csv","size":257507,"isDir":false,"modificationTime":1751428651488,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/cleaned_stream/csv/part-00000-59c7d0c9-75d3-4b63-bc1f-a6f6ede531de-c000.csv","size":238867,"isDir":false,"modificationTime":1751428655168,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/cleaned_stream/csv/part-00000-ac22f8b4-0366-443e-b13f-dfd2ed3c093d-c000.csv","size":382496,"isDir":false,"modificationTime":1751428659816,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///app/output/cleaned_stream/csv/part-00000-b4609689-7979-4d49-a442-6eadf6d8c8dd-c000.csv","size":368007,"isDir":false,"modificationTime":1751428662396,"blockReplication":1,"blockSize":33554432,"action":"add"}
