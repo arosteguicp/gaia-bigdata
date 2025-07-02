@@ -36,8 +36,23 @@ processing/gaia_streaming_cleaner.py
 
 ### Ejecución
 
-Asegúrate de tener el contenedor corriendo con Kafka (como lo hace el Integrante 1). Luego, ejecuta el siguiente comando desde la raíz del proyecto para iniciar el procesamiento:
+Asegúrate de tener el contenedor corriendo con Kafka. 
+```bash
+docker run -it --rm `
+  --network ingestion_default `
+  -v ${PWD}:/app `
+  -w /app/ingestion `
+  python:3.9 `
+  bash -c "pip install -r requirements.txt && python gaia_kafka_producer_jamona.py"
+```
+
+Luego, ejecuta el siguiente comando desde la raíz del proyecto para iniciar el procesamiento:
 
 ```bash
-spark-submit processing/gaia_streaming_cleaner.py
-
+docker run -it --rm `
+  --network ingestion_default `
+  -v ${PWD}:/app `
+  -w /app/processing `
+  bitnami/spark:3.1.3 `
+  spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.3 gaia_streaming_cleaner.py 
+```
