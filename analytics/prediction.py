@@ -68,4 +68,4 @@ df['pred_dec_mlp'] = mlp_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 1]
 z_scores = np.abs(stats.zscore(df[['ra', 'dec', 'pmra', 'pmdec']]))
 df['outlier'] = (z_scores > 3).all(axis=1) 
 
-
+df.to_csv('data_gaia_predictions.csv', index=False)
