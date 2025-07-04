@@ -110,3 +110,61 @@ El archivo `processing/mongo_queries.py` permite realizar búsquedas rápidas y 
 ```bash
 python processing/mongo_queries.py
 ```
+
+## Analytics: Predicción de Ubicación de Estrellas y Análisis de Movimiento**
+
+Una vez que los datos han sido limpiados y almacenados, aplicamos modelos de Machine Learning para predecir las posiciones futuras de las estrellas (en las coordenadas `ra` y `dec`) y detectar patrones de movimiento. Utilizamos **Regresión Lineal**  y **MLPRegressor** para esta tarea. Además, implementamos **DBSCAN** para la identificación de cúmulos de estrellas en función de su proximidad espacial.
+
+### DBSCAN: Identificación de Cúmulos de Estrellas
+
+Primero, aplicamos DBSCAN para identificar cúmulos de estrellas en las coordenadas `ra` y `dec`. DBSCAN es un algoritmo de agrupamiento que identifica densidades de puntos y puede detectar "ruido" o estrellas que no forman parte de ningún cúmulo.
+
+```python
+from sklearn.cluster import DBSCAN
+
+X = df[['ra', 'dec']].values
+db = DBSCAN(eps=0.1, min_samples=5, metric='euclidean')
+df['cluster'] = db.fit_predict(X)  
+```
+
+### Regresión Lineal 
+
+A continuación, utilizamos Regresión Ridge para predecir las posiciones futuras de las estrellas. Ridge es una forma de regresión lineal con regularización L2, lo que ayuda a prevenir el sobreajuste y mejora la generalización del modelo.
+
+```python
+from sklearn.linear_model import Ridge
+
+linear_model = Ridge(alpha=1.0)  
+linear_model.fit(X_train, y_train)
+y_pred_linear = linear_model.predict(X_test)
+df['pred_ra_linear'] = linear_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 0] 
+df['pred_dec_linear'] = linear_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 1]  
+```
+
+### MLPRegressor (Red Neuronal)
+
+Usamos MLPRegressor, un modelo de red neuronal, para capturar patrones no lineales en los datos y mejorar la precisión de las predicciones. Este modelo utiliza múltiples capas ocultas para aprender relaciones más complejas entre las características de las estrellas.
+
+```python
+from sklearn.neural_network import MLPRegressor
+
+mlp_model = MLPRegressor(hidden_layer_sizes=(100,), max_iter=1000, random_state=42, 
+                         early_stopping=True, validation_fraction=0.1, n_iter_no_change=10)
+mlp_model.fit(X_train_scaled, y_train)
+y_pred_mlp = mlp_model.predict(X_test_scaled)
+df['pred_ra_mlp'] = mlp_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 0]  
+df['pred_dec_mlp'] = mlp_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 1] 
+```
+
+### Detección de Outliers
+
+Para detectar valores atípicos en las variables de entrada (por ejemplo, ra, dec, pmra, pmdec), utilizamos el Z-Score. Los valores cuyo Z-Score es mayor a 3 se marcan como outliers.
+
+```python
+from scipy import stats
+
+z_scores = np.abs(stats.zscore(df[['ra', 'dec', 'pmra', 'pmdec']]))
+df['outlier'] = (z_scores > 3).all(axis=1)
+```
+
+## Visualización
