@@ -111,7 +111,7 @@ El archivo `processing/mongo_queries.py` permite realizar búsquedas rápidas y 
 python processing/mongo_queries.py
 ```
 
-## Analytics: Predicción de Ubicación de Estrellas y Análisis de Movimiento**
+## Analytics: Predicción de Ubicación de Estrellas y Análisis de Movimiento
 
 Una vez que los datos han sido limpiados y almacenados, aplicamos modelos de Machine Learning para predecir las posiciones futuras de las estrellas (en las coordenadas `ra` y `dec`) y detectar patrones de movimiento. Utilizamos **Regresión Lineal**  y **MLPRegressor** para esta tarea. Además, implementamos **DBSCAN** para la identificación de cúmulos de estrellas en función de su proximidad espacial.
 
@@ -141,7 +141,7 @@ df['pred_ra_linear'] = linear_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[
 df['pred_dec_linear'] = linear_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 1]  
 ```
 
-### MLPRegressor (Red Neuronal)
+### MLPRegressor
 
 Usamos MLPRegressor, un modelo de red neuronal, para capturar patrones no lineales en los datos y mejorar la precisión de las predicciones. Este modelo utiliza múltiples capas ocultas para aprender relaciones más complejas entre las características de las estrellas.
 
