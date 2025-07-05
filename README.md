@@ -6,7 +6,9 @@ Gaia es una misión espacial europea que proporciona astrometría y muchos más 
 Nuestro objetivo es recolectar un gran volúmen de datos progresivamente mediante el producer en nuestro caso gaia_kafka_producer2.py.  
 Nos apoyamos de la librería astroquery.gaia que nos permite acceder a la base de datos de la misión sin necesidad de realizar webscraping en su página principal, en su base de datos nosotros trabajamos con la tabla: gaiadr3.gaia_source que es el tercer reporte de la misión.
 
-
+''''''
+from astroquery.gaia import Gaia
+''''''
 
 
 En nuestro producer,  extraemos los registros de gaia en lotes de 10 mil cada minuto para publicarlos en un tema de Kafka, asegurando un flujo constante. Nos conectamos a un broker de Kafka que se ejecuta en localhost:9092 y envía datos al gaia_topic, con cada registro serializado en formato JSON.
