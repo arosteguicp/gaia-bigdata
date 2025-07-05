@@ -4,6 +4,7 @@ from dask_ml.cluster import DBSCAN as DaskDBSCAN
 from dask_ml.linear_model import Ridge as DaskRidge
 from dask_ml.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPRegressor
 import numpy as np
 import pandas as pd
 from pymongo import MongoClient
@@ -30,7 +31,7 @@ df['processed_at'] = dd.to_datetime(df['processed_at'])
 df['processed_at'] = (df['processed_at'].astype('int64') // 10**9).astype('int32')
 
 # DBSCAN
-X = df[['ra', 'dec']]  
+X = df[['ra', 'dec']]  # No compute() here, keeping it distributed
 db = DaskDBSCAN(eps=0.1, min_samples=5, metric='euclidean')
 df['cluster'] = db.fit_predict(X)
 
@@ -48,12 +49,13 @@ scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# Linear Regression
+# 1. Linear Model
 linear_model = DaskRidge(alpha=1.0)
 linear_model.fit(X_train, y_train)
 
 y_pred_linear = linear_model.predict(X_test)
 
+# Predecir en todo el DataFrame
 df['pred_ra_linear'] = linear_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 0] 
 df['pred_dec_linear'] = linear_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 1]
 
@@ -66,7 +68,7 @@ df['pred_ra_mlp'] = mlp_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 0]
 df['pred_dec_mlp'] = mlp_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 1]  
 
 # 3. Outlier Detection using Z-Score
-z_scores = np.abs(stats.zscore(df[['ra', 'dec', 'pmra', 'pmdec']].compute()))  
+z_scores = np.abs(stats.zscore(df[['ra', 'dec', 'pmra', 'pmdec']].compute()))  # Calcular los z-scores de manera distribuida
 df['outlier'] = (z_scores > 3).all(axis=1)
 
 df.to_csv('data_gaia_predictions.csv', index=False, single_file=True)
