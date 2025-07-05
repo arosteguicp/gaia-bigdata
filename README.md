@@ -35,9 +35,21 @@ Ahora, en la consulta a la base dde datos y la tabla que especificamos, nos cent
     ORDER BY source_id ASC
     """
 ``````
-Para evitar el envío de datos duplicados (con los cuales tuvimos problemas al principio), nos ayudamos de **source_id**, agregándole un **order by** para garantizar un único llamado al registro. Es por eso que en cada iteración por lote se tiene un source_id mayor que el último procesado exitosamente.
+Para evitar el envío de datos duplicados (con los cuales tuvimos problemas al principio), nos ayudamos de **source_id**, agregándole un **order by** para garantizar un único llamado al registro. Es por eso que en cada iteración por lote se tiene un source_id mayor que el último procesado exitosamente.  
+
 Todo este proceso de extracción y publicación está orquestado para ejecutarse en intervalos de un minuto (en el producer lo especificamos con 60 segundos).
-Después de obtener y enviar un lote de registros, el script calcula el tiempo restante en el minuto y pausa, asegurando una tasa de envío de datos consistente, esto lo agregamos para cubrir casos donde un lote demore más de un minuto en recolectarse y se acumule en el buffer con el siguiente, además también llamamos a producer.flush() para enviar lo que se recolecte. Resaltamos igual que el tiempo promedio de recolección de registros es de 5 segundos y que el producer en su tiempo más largo de ejecución (28 minutos) recolectó 280 k registros obteniendo un gran volúmen de datos con los cuales podemos trabajar.
+``````
+elapsed_time = time.time() - start_time
+    time_to_wait = INTERVAL_SECONDS - elapsed_time
+    #aqui garatnizamos el tiempo en recolectar mandar y esperamos al minuto para evitar errores de transmisión.
+    if time_to_wait > 0:
+        print(f"Tiempo transcurrido: {elapsed_time:.2f} segundos. Esperando {time_to_wait:.2f} segundos para la siguiente ejecución ")
+        time.sleep(time_to_wait)
+    else:
+        print(f"La ejecución tardó más de {INTERVAL_SECONDS} segundos ({elapsed_time:.2f}s). Ejecutando inmediatamente el siguiente ciclo")
+``````
+Después de obtener y enviar un lote de registros, el script calcula el tiempo restante en el minuto y pausa, asegurando una tasa de envío de datos consistente, esto lo agregamos para cubrir casos donde un lote demore más de un minuto en recolectarse y se acumule en el buffer con el siguiente, además también llamamos a ``````producer.flush()`````` para enviar lo que se recolecte hasta el momento.
+Resaltamos de igual manera que el tiempo promedio de recolección de registros es de **5 segundos** y que el producer en su tiempo más largo de ejecución (**28 minutos**) recolectó **280 k registros** obteniendo un gran volúmen de datos con los cuales podemos trabajar.
 
 
 
