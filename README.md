@@ -4,14 +4,38 @@ Gaia es una misión espacial europea que proporciona astrometría y muchos más 
 
 ## Ingesta de datos con Kafka  
 Nuestro objetivo es recolectar un gran volúmen de datos progresivamente mediante el producer en nuestro caso gaia_kafka_producer2.py.  
-Nos apoyamos de la librería astroquery.gaia que nos permite acceder a la base de datos de la misión sin necesidad de realizar webscraping en su página principal, en su base de datos nosotros trabajamos con la tabla: gaiadr3.gaia_source que es el tercer reporte de la misión.
+Nos apoyamos de la librería **astroquery.gaia** que nos permite acceder a la base de datos de la misión sin necesidad de realizar webscraping en su página principal, en su base de datos nosotros trabajamos con la tabla: **gaiadr3.gaia_source** que es el tercer reporte de la misión.
 
 ``````
 from astroquery.gaia import Gaia
 ``````
 
-En nuestro producer,  extraemos los registros de gaia en lotes de 10 mil cada minuto para publicarlos en un tema de Kafka, asegurando un flujo constante. Nos conectamos a un broker de Kafka que se ejecuta en localhost:9092 y envía datos al gaia_topic, con cada registro serializado en formato JSON.
-Para evitar el envío de datos duplicados (con los cuales tuvimos problemas al principio), nos ayudamos de source_id para garantizar un único llamado al registro. Es por eso que en cada iteración por lote se tiene un source_id mayor que el último procesado exitosamente.
+En nuestro producer,  extraemos los registros de gaia en lotes de 10 mil cada minuto para publicarlos en el topic: gaia_topic, asegurando un flujo constante. Nos conectamos a un broker de Kafka que se ejecuta en localhost:9092 y envía datos al topic, con cada registro serializado en formato JSON.
+
+``````
+KAFKA_BOOTSTRAP_SERVERS = 'localhost:9092'
+KAFKA_TOPIC = 'gaia_topic'
+RECORDS_PER_BATCH = 10000 #10k
+INTERVAL_SECONDS = 60 
+``````
+Aquí es importante resaltar que si se clona el repositorio para correr el proyecto, si el entorno donde se instalaron los requerimientos es de WSL entonces será necesario definir el bootstrap como localhost para evitar errores.  
+Ahora, en la consulta a la base dde datos y la tabla que especificamos, nos centramos en atributos numéricos que tengan variabilidad e información sobre las estrellas pertenecientes a las constelaciones.
+
+``````
+  query = f"""
+    SELECT TOP {RECORDS_PER_BATCH}
+        source_id, ra, dec, parallax, pmra, pmdec,
+        phot_g_mean_mag, bp_rp, teff_gspphot, distance_gspphot,
+        ruwe, phot_variable_flag
+    FROM gaiadr3.gaia_source
+    WHERE phot_g_mean_mag IS NOT NULL
+      AND parallax IS NOT NULL
+      AND teff_gspphot IS NOT NULL
+      AND source_id > {last_processed_source_id}
+    ORDER BY source_id ASC
+    """
+``````
+Para evitar el envío de datos duplicados (con los cuales tuvimos problemas al principio), nos ayudamos de **source_id**, agregándole un **order by** para garantizar un único llamado al registro. Es por eso que en cada iteración por lote se tiene un source_id mayor que el último procesado exitosamente.
 Todo este proceso de extracción y publicación está orquestado para ejecutarse en intervalos de un minuto (en el producer lo especificamos con 60 segundos).
 Después de obtener y enviar un lote de registros, el script calcula el tiempo restante en el minuto y pausa, asegurando una tasa de envío de datos consistente, esto lo agregamos para cubrir casos donde un lote demore más de un minuto en recolectarse y se acumule en el buffer con el siguiente, además también llamamos a producer.flush() para enviar lo que se recolecte. Resaltamos igual que el tiempo promedio de recolección de registros es de 5 segundos y que el producer en su tiempo más largo de ejecución (28 minutos) recolectó 280 k registros obteniendo un gran volúmen de datos con los cuales podemos trabajar.
 
