@@ -215,7 +215,8 @@ df['outlier'] = (z_scores > 3).all(axis=1)
 ```
 
 ## Visualización
-Este apartado incluye los gráficos creados con Tableau para analizar las observaciones astronómicas obtenidas de la misión **Gaia**. A través de estos gráficos, se busca visualizar patrones, relaciones y distribuciones clave entre diferentes variables astronómicas.[Enlace a Dashboard (https://public.tableau.com/app/profile/paolo5730/viz/GAIA_17516868128430/Dashboard) 
+Este apartado incluye los gráficos creados con Tableau para analizar las observaciones astronómicas obtenidas de la misión **Gaia**. A través de estos gráficos, se busca visualizar patrones, relaciones y distribuciones clave entre diferentes variables astronómicas.[Enlace a Dashboard]
+(https://public.tableau.com/app/profile/paolo5730/viz/GAIA_17516868128430/Dashboard1)
 
 ## 1. Mapa de Clústeres
 **Descripción**: Este gráfico muestra la ubicación geográfica de los objetos astronómicos clasificados en diferentes **clústeres**. Utilizando las coordenadas de **Longitud** y **Latitud**, cada punto está representado por un color que corresponde a un **cluster** específico.
