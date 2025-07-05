@@ -48,7 +48,7 @@ scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# Modelo Lineal (Ridge)
+# Linear Regression
 linear_model = DaskRidge(alpha=1.0)
 linear_model.fit(X_train, y_train)
 
