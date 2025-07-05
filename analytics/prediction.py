@@ -31,7 +31,7 @@ df['processed_at'] = dd.to_datetime(df['processed_at'])
 df['processed_at'] = (df['processed_at'].astype('int64') // 10**9).astype('int32')
 
 # DBSCAN
-X = df[['ra', 'dec']]  # No compute() here, keeping it distributed
+X = df[['ra', 'dec']] 
 db = DaskDBSCAN(eps=0.1, min_samples=5, metric='euclidean')
 df['cluster'] = db.fit_predict(X)
 
