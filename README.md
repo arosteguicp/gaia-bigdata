@@ -215,3 +215,4 @@ df['outlier'] = (z_scores > 3).all(axis=1)
 ```
 
 ## Visualización
+Para la visualización se trabajo con la herramienta de software Tableu.
