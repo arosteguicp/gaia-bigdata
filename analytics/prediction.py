@@ -54,7 +54,6 @@ linear_model.fit(X_train, y_train)
 
 y_pred_linear = linear_model.predict(X_test)
 
-# Predecir en todo el DataFrame
 df['pred_ra_linear'] = linear_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 0] 
 df['pred_dec_linear'] = linear_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 1]
 
