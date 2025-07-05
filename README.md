@@ -261,3 +261,12 @@ Este apartado incluye los gráficos creados con Tableau para analizar las observ
 
 ![Gráfico de Errores (RA y DEC)](errores.png)
 
+# Conclusiones
+
+- El proyecto logró integrar herramientas de Big Data para manejar grandes volúmenes de datos astronómicos de la misión **Gaia**, desde la recolección hasta la visualización.
+- Se utilizó **Apache Kafka** y **Apache Spark** para asegurar un procesamiento eficiente y escalable de los datos en tiempo real.
+- Las predicciones sobre la ubicación de las estrellas fueron mejoradas utilizando modelos de **Machine Learning**, como **Regresión Lineal** y **MLPRegressor**.
+- **DBSCAN** permitió la identificación efectiva de cúmulos de estrellas, facilitando la comprensión de la distribución espacial de las mismas.
+- El análisis y la visualización de los resultados en **Tableau** proporcionaron una interfaz interactiva y accesible para explorar patrones astronómicos clave.
+
+En resumen, el flujo de trabajo implementado permitió realizar predicciones precisas y análisis espaciales de las estrellas, con un enfoque eficiente en el procesamiento y visualización de grandes conjuntos de datos.
