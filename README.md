@@ -240,7 +240,7 @@ Este apartado incluye los gráficos creados con Tableau para analizar las observ
 
 **Objetivo**: Explorar cómo se correlacionan la temperatura y el brillo de las estrellas. Las estrellas más calientes suelen ser más brillantes, lo que se refleja en la tendencia de este gráfico.
 
-![Temperatura Efectiva vs Magnitud](TEMPERATURA EFECTIVA.png)
+![Temperatura Efectiva vs Magnitud](TEMPERATURA.png)
 
 ## 3. Velocidad de las Estrellas vs Patrón de Movimiento
 **Descripción**: Gráfico de barras que muestra la **velocidad media** de las estrellas agrupadas por su **patrón de movimiento**. Los patrones incluyen categorías como "Lento", "Rápido", y "Muy Rápido".
