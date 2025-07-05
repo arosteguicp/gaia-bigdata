@@ -66,7 +66,7 @@ df['pred_ra_mlp'] = mlp_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 0]
 df['pred_dec_mlp'] = mlp_model.predict(df[['ra', 'dec', 'pmra', 'pmdec']])[:, 1]  
 
 # 3. Outlier Detection using Z-Score
-z_scores = np.abs(stats.zscore(df[['ra', 'dec', 'pmra', 'pmdec']].compute()))  # Calcular los z-scores de manera distribuida
+z_scores = np.abs(stats.zscore(df[['ra', 'dec', 'pmra', 'pmdec']].compute()))  
 df['outlier'] = (z_scores > 3).all(axis=1)
 
 df.to_csv('data_gaia_predictions.csv', index=False, single_file=True)
