@@ -1,6 +1,18 @@
 
-# Análisis de datos espaciales de GAIA para la predicción de ubicación de estrellas con Big Data
+# Análisis de datos espaciales de GAIA para la predicción de ubicación de estrella
 Gaia es una misión espacial europea que proporciona astrometría y muchos más datos y métricas de 1.000 millones de estrellas de la Vía Láctea. En este proyecto utilizaremos la mayor cantidad de herramientas aprendidas en Big Data para poder sacar información provechosa de los datos proporcionados por Gaia, con el fin de predecir la ubicación de algunas estrellas en las constelaciones.  
+# Flujo de Trabajo
+
+El flujo de trabajo para este proyecto sigue una serie de etapas clave:
+
+1. **Extracción de Datos**: Usamos **astroquery.gaia** para obtener los datos de Gaia y publicarlos en Kafka en lotes de 10,000 registros por minuto.
+2. **Ingesta con Kafka**: Los datos extraídos se envían a Kafka, asegurando un flujo constante y eficiente de información.
+3. **Transformación con Apache Spark**: Los datos son limpiados, validados e imputados, luego se guardan en formato Parquet para su posterior uso.
+4. **Almacenamiento en MongoDB**: Los datos procesados se cargan en **MongoDB**, optimizados con un índice geoespacial para facilitar consultas espaciales.
+5. **Análisis y Modelado con Python**: Aplicamos **Machine Learning** para predecir la ubicación de las estrellas y detectar cúmulos espaciales, utilizando **Regresión Lineal** y **DBSCAN**.
+6. **Visualización con Tableau**: Finalmente, los resultados se visualizan en **Tableau**, permitiendo explorar patrones astronómicos y relaciones entre variables clave.
+
+![Flujo de Trabajo GAIA](FlujoDeTrabajo.png)
 
 ## Ingesta de datos con Kafka  
 Nuestro objetivo es recolectar un gran volúmen de datos progresivamente mediante el producer en nuestro caso gaia_kafka_producer2.py.  
@@ -222,26 +234,30 @@ Este apartado incluye los gráficos creados con Tableau para analizar las observ
 **Descripción**: Este gráfico muestra la ubicación geográfica de los objetos astronómicos clasificados en diferentes **clústeres**. Utilizando las coordenadas de **Longitud** y **Latitud**, cada punto está representado por un color que corresponde a un **cluster** específico.
 
 **Objetivo**: Ver cómo se distribuyen los objetos en el espacio según su **cluster**, proporcionando una visualización espacial de los objetos observados.
-
+![Mapa de Clústeres](mapa}.png)
 ## 2. Temperatura Efectiva vs Magnitud
 **Descripción**: Este gráfico de dispersión muestra la relación entre la **Temperatura Efectiva** de las estrellas (**Teff Gspphot**) y su **Brillo Aparente** (**Phot G Mean Mag**).
 
 **Objetivo**: Explorar cómo se correlacionan la temperatura y el brillo de las estrellas. Las estrellas más calientes suelen ser más brillantes, lo que se refleja en la tendencia de este gráfico.
 
+![Temperatura Efectiva vs Magnitud](TEMPERATURA EFECTIVA.png)
+
 ## 3. Velocidad de las Estrellas vs Patrón de Movimiento
 **Descripción**: Gráfico de barras que muestra la **velocidad media** de las estrellas agrupadas por su **patrón de movimiento**. Los patrones incluyen categorías como "Lento", "Rápido", y "Muy Rápido".
 
 **Objetivo**: Visualizar cómo se distribuyen las velocidades entre los diferentes patrones de movimiento de las estrellas. Esto puede indicar si ciertos patrones de movimiento están asociados con mayores o menores velocidades.
-
+![Velocidad de las Estrellas vs Patrón de Movimiento](barras.png)
 
 ## 4. Relación entre Distancia y Parallax
 **Descripción**: Este gráfico de dispersión muestra la relación entre la **distancia estimada de las estrellas** (**Distance Gspphot**) y el **parallax** observado de las mismas estrellas.
 
 **Objetivo**: Verificar la relación inversa entre **parallax** y **distancia**. Según la teoría, una mayor **parallax** debe correlacionarse con una menor **distancia**.
+![Relación entre Distancia y Parallax](disstance.png)
 
 ## 5. Gráfico de Errores (RA y DEC)
 **Descripción**: Este gráfico de dispersión muestra los **errores** en las coordenadas **RA** (Ascensión Recta) y **DEC** (Declinación) de las estrellas.
 
 **Objetivo**: Analizar los errores en la medición de las coordenadas de las estrellas y evaluar la precisión de las observaciones. Un análisis de los errores es clave para entender la calidad de los datos obtenidos por Gaia.
 
+![Gráfico de Errores (RA y DEC)](errores.png)
 
