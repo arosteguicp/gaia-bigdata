@@ -215,4 +215,32 @@ df['outlier'] = (z_scores > 3).all(axis=1)
 ```
 
 ## Visualización
-Para la visualización se trabajo con la herramienta de software Tableu.
+Este apartado incluye los gráficos creados con Tableau para analizar las observaciones astronómicas obtenidas de la misión **Gaia**. A través de estos gráficos, se busca visualizar patrones, relaciones y distribuciones clave entre diferentes variables astronómicas.[Enlace a Dashboard (https://public.tableau.com/app/profile/paolo5730/viz/GAIA_17516868128430/Dashboard) 
+
+## 1. Mapa de Clústeres
+**Descripción**: Este gráfico muestra la ubicación geográfica de los objetos astronómicos clasificados en diferentes **clústeres**. Utilizando las coordenadas de **Longitud** y **Latitud**, cada punto está representado por un color que corresponde a un **cluster** específico.
+
+**Objetivo**: Ver cómo se distribuyen los objetos en el espacio según su **cluster**, proporcionando una visualización espacial de los objetos observados.
+
+## 2. Temperatura Efectiva vs Magnitud
+**Descripción**: Este gráfico de dispersión muestra la relación entre la **Temperatura Efectiva** de las estrellas (**Teff Gspphot**) y su **Brillo Aparente** (**Phot G Mean Mag**).
+
+**Objetivo**: Explorar cómo se correlacionan la temperatura y el brillo de las estrellas. Las estrellas más calientes suelen ser más brillantes, lo que se refleja en la tendencia de este gráfico.
+
+## 3. Velocidad de las Estrellas vs Patrón de Movimiento
+**Descripción**: Gráfico de barras que muestra la **velocidad media** de las estrellas agrupadas por su **patrón de movimiento**. Los patrones incluyen categorías como "Lento", "Rápido", y "Muy Rápido".
+
+**Objetivo**: Visualizar cómo se distribuyen las velocidades entre los diferentes patrones de movimiento de las estrellas. Esto puede indicar si ciertos patrones de movimiento están asociados con mayores o menores velocidades.
+
+
+## 4. Relación entre Distancia y Parallax
+**Descripción**: Este gráfico de dispersión muestra la relación entre la **distancia estimada de las estrellas** (**Distance Gspphot**) y el **parallax** observado de las mismas estrellas.
+
+**Objetivo**: Verificar la relación inversa entre **parallax** y **distancia**. Según la teoría, una mayor **parallax** debe correlacionarse con una menor **distancia**.
+
+## 5. Gráfico de Errores (RA y DEC)
+**Descripción**: Este gráfico de dispersión muestra los **errores** en las coordenadas **RA** (Ascensión Recta) y **DEC** (Declinación) de las estrellas.
+
+**Objetivo**: Analizar los errores en la medición de las coordenadas de las estrellas y evaluar la precisión de las observaciones. Un análisis de los errores es clave para entender la calidad de los datos obtenidos por Gaia.
+
+
